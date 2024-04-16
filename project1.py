@@ -9,6 +9,10 @@ def _read_input_file_path() -> Path:
 def main() -> None:
     """Runs the simulation program in its entirety"""
     input_file_path = _read_input_file_path()
+    with open(input_file_path, 'r') as file:
+        for line in file:
+            print('lines:',line)
+
 
 
 if __name__ == '__main__':
