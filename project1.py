@@ -1,7 +1,10 @@
 from pathlib import Path
 
-
-
+class Alert:
+    def __init__(self, device, messge, time_recieved):
+        self.device = device
+        self.messge = messge
+        self.time_recieved = time_recieved
 
 
 def _read_input_file_path() -> Path:
@@ -15,7 +18,9 @@ def main() -> None:
     lines = []
     devices = []
     propagations = []
+    propagation_list= []
     alerts = []
+    alert_lst= []
     time = []
     cancellations = []
     input_file_path = _read_input_file_path()
@@ -25,16 +30,22 @@ def main() -> None:
         for line in lines:
             if line.startswith('DEVICE'):
                 devices.append(line)
-            if line.startswith('PROPAGATE'):
-                propagations.append(line)
-            if line.startswith('ALERT'):
+            elif line.startswith('PROPAGATE'):
+                propagations.append(line.split())
+            elif line.startswith('ALERT'):
                 alerts.append(line)
-            if line.startswith('CANCEL'):
+            elif line.startswith('CANCEL'):
                 cancellations.append(line)
 
 
-    #print(lines)
-    print(devices, propagations, alerts, cancellations)
+
+    for alert in alerts:
+        alert_parts= alert.split()
+        alert_lst.append(Alert(alert_parts[1], alert_parts[2], alert_parts[3]))
+    print(alert_lst[0].time_recieved)
+
+    #print(devices, propagations, alerts, cancellations)
+    #print(propagations)
 
 
 
