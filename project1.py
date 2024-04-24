@@ -84,7 +84,22 @@ def main() -> None:
     for msg in queue_messages:
         q.put(msg)
 
+    cancel_dict= {}
+    for source in sources.keys():
+        cancel_dict[source]= []
 
+    while not q.empty():
+        top_alert = q.get()
+        if top_alert[0] > length:
+            break
+        if "ALERT" in top_alert[1]:
+            if top_alert[4] is not None:
+                print(f'@{top_alert[0]}: #{top_alert[3]} RECEIVED ALERT FROM #{top_alert[4]}: {top_alert[2]}')
+            if top_alert[2] in cancel_dict[top_alert[3]]:
+                continue
+            print(f'@{top_alert[0]}: #{top_alert[3]} SENT ALERT TO #{sources[top_alert[3]][0]}: {top_alert[2]}')
+            msg = (top_alert[0] + int(sources[top_alert[3]][1]), top_alert[1], top_alert[2],sources[top_alert[3]][0], top_alert[3])
+            q.put(msg)
 
 
 
