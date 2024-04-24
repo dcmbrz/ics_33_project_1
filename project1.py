@@ -79,7 +79,10 @@ def main() -> None:
         input_messages.put((int(cancellations_lst[0].time_received), cancellations_lst[0].call, cancellations_lst[0].message, cancellations_lst[0].device, None))
     while not input_messages.empty():
         queue_messages.append(input_messages.get())
+    print(queue_messages)
 
+    for msg in queue_messages:
+        q.put(msg)
 
 
 
