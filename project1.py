@@ -73,6 +73,14 @@ def main() -> None:
     input_messages= PriorityQueue()
     q= PriorityQueue()
 
+    for alert in alert_lst:
+        input_messages.put((int(alert_lst[0].time_received), alert_lst[0].call, alert_lst[0].message, alert_lst[0].device, None))
+    for cancellation in cancellations_lst:
+        input_messages.put((int(cancellations_lst[0].time_received), cancellations_lst[0].call, cancellations_lst[0].message, cancellations_lst[0].device, None))
+    while not input_messages.empty():
+        queue_messages.append(input_messages.get())
+
+
 
 
 
