@@ -24,8 +24,6 @@ def _read_input_file_path() -> Path:
     """Reads the input file path from the standard input"""
     return Path(input())
 
-
-
 def main() -> None:
     """Runs the simulation program in its entirety"""
     lines = []
@@ -61,35 +59,17 @@ def main() -> None:
 
     for alert in alerts:
         alert_parts= alert.split()
-        alert_lst.append(Alert(alert_parts[1], alert_parts[2], alert_parts[3]))
-    #print(alert_lst[0].device)
-    #print(alert_lst[0].time_received)
+        alert_lst.append(Alert(alert_parts[0],alert_parts[1], alert_parts[2], alert_parts[3]))
 
     for propagation in propagations:
-        current_time += int(propagation[3])
         propagation_list.append(Propagation(propagation[0], propagation[1], propagation[2], propagation[3]))
-        sources[propagation[1]] = (propagation[2],current_time)
-    print(sources)
-
-
-
-    #print(propagation_list[0].call)
-    #print(propagation_list[0].device1)
-    #print(propagation_list[0].device2)
-    #print(propagation_list[0].time_received)
+        sources[propagation[1]] = (propagation[2],propagation[3])
 
     for cancellation in cancellations:
         cancellation_parts= cancellation.split()
         cancellations_lst.append(Cancellation(cancellation_parts[0], cancellation_parts[1], cancellation_parts[2], cancellation_parts[3]))
-    #print(cancellations_lst[0].call)
-    #print(cancellations_lst[0].device)
-    #print(cancellations_lst[0].message)
-    #print(cancellations_lst[0].time_received)
 
-    for i in range(length):
-        for k,v in sources.items():
-            if v[1] == i:
-                print(f'#{k} SENT ALERT TO #{v[0]}: Trouble')
+
 
 
 
