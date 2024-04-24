@@ -1,7 +1,8 @@
 from pathlib import Path
-
+from queue import PriorityQueue
 class Alert:
-    def __init__(self, device, message, time_received):
+    def __init__(self,call, device, message, time_received):
+        self.call = call
         self.device = device
         self.message = message
         self.time_received = time_received
@@ -11,27 +12,12 @@ class Propagation:
         self.device1 = device1
         self.device2 = device2
         self.time_received = time_received
-
-
-    # def propagation_set(self, device1, device2, time_received):
-    #     self.sources[device1] = (device2, time_received)
-
-
-
 class Cancellation:
     def __init__(self, call, device, message, time_received):
         self.call = call
         self.device = device
         self.message = message
         self.time_received = time_received
-class Timeline:
-    def __init__(self, event):
-        self.event = event
-
-    def run(self):
-        while self.event:
-            pass
-
 
 
 def _read_input_file_path() -> Path:
