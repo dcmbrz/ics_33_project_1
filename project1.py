@@ -69,7 +69,9 @@ def main() -> None:
         cancellation_parts= cancellation.split()
         cancellations_lst.append(Cancellation(cancellation_parts[0], cancellation_parts[1], cancellation_parts[2], cancellation_parts[3]))
 
-
+    queue_messages= []
+    input_messages= PriorityQueue()
+    q= PriorityQueue()
 
 
 
