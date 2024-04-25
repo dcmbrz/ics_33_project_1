@@ -79,7 +79,6 @@ def main() -> None:
         input_messages.put((int(cancellations_lst[0].time_received), cancellations_lst[0].call, cancellations_lst[0].message, cancellations_lst[0].device, None))
     while not input_messages.empty():
         queue_messages.append(input_messages.get())
-    print(queue_messages)
 
     for msg in queue_messages:
         q.put(msg)
@@ -92,6 +91,7 @@ def main() -> None:
         top_alert = q.get()
         if top_alert[0] > length:
             break
+
         if "ALERT" in top_alert[1]:
             if top_alert[4] is not None:
                 print(f'@{top_alert[0]}: #{top_alert[3]} RECEIVED ALERT FROM #{top_alert[4]}: {top_alert[2]}')
@@ -101,6 +101,16 @@ def main() -> None:
             msg = (top_alert[0] + int(sources[top_alert[3]][1]), top_alert[1], top_alert[2],sources[top_alert[3]][0], top_alert[3])
             q.put(msg)
 
+        if "CANCEL" in top_alert[1]:
+            if top_alert[4] is not None:
+                print(f'@{top_alert[0]}: #{top_alert[3]} RECEIVED CANCELLATION FROM #{top_alert[4]}: {top_alert[2]}')
+            if top_alert[2] in cancel_dict[top_alert[3]]:
+                continue
+            cancel_dict[top_alert[3]].append(top_alert[2])
+            print(f'@{top_alert[0]}: #{top_alert[3]} SENT CANCELLATION TO #{sources[top_alert[3]][0]}: {top_alert[2]}')
+            msg = (top_alert[0] + int(sources[top_alert[3]][1]), top_alert[1], top_alert[2],sources[top_alert[3]][0], top_alert[3])
+            q.put(msg)
+    print(f'@{length}: END')
 
 
 
